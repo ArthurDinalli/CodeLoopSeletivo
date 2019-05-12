@@ -33,7 +33,7 @@
                               <th>Endereço</th>
                               <th>Dados da mãe</th>
                               <th>Dia do Vencimento</th>
-                              <th><button id="btn-add" class="btn btn-primary btn-md"  (click)="open(content)"><span class="glyphicon glyphicon-plus"></span> Adicionar novo aluno</button></th>
+                              <th><button id="btn-add" class="btn btn-primary btn-md"  (click)="adicionarAluno(content)"><span class="glyphicon glyphicon-plus"></span> Adicionar novo aluno</button></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -47,7 +47,7 @@
                               <td>{{ aluno.venc}}</td>
                               <td>
                                   <div class = "btn-group" >
-                                    <button class="btn btn-default btn-md btn-detail" (click)="editAluno(aluno)"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+                                    <button class="btn btn-default btn-md btn-detail" (click)="editAluno(aluno, content)"><span class="glyphicon glyphicon-edit"></span> Editar</button>
                                     <button class="btn btn-danger btn-md btn-delete" (click)="deleteAluno(aluno)"><span class="glyphicon glyphicon-trash"></span> Excluir</button>
                                   </div>
                               </td>
@@ -73,8 +73,8 @@
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control has-error" id="nome" name="nome" placeholder="Nome completo" value="{{nome}}" maxlength="100"
                                           [(ngModel)]="alunoForm.nome" ng-required="true">
-                                          <span class="help-inline"
-                                          ng-show="frmAlunos.nome.$invalid && frmAlunos.nome.$touched">Nome é obrigatório.</span>
+                                          <span style="color:red" class="help-inline"
+                                          *ngIf="alunoValidation.nome">Nome é obrigatório.</span>
                                       </div>
                                   </div>
   
@@ -91,7 +91,8 @@
                                               <option value="7">7º ano</option>
                                               <option value="8">8º ano</option>
                                               <option value="9">9º ano</option>
-                                            </select> 
+                                            </select>
+                                            <span style="color:red" class="help-inline" *ngIf="alunoValidation.serie"> Série é obrigatório</span> 
                                       </div>
                                   </div>
   
@@ -100,6 +101,7 @@
                                       <div class="col-sm-9">
                                           <input type="date" class="form-control" id="data_nasc" name="data_nasc" placeholder="Data de Nascimento" min="2000-01-01"value="{{data_nasc}}"
                                           [(ngModel)]="alunoForm.nasc" ng-required="true">
+                                          <span style="color:red" class="help-inline" *ngIf="alunoValidation.nasc">Data de Nascimento é obrigatório</span>
                                       </div>
                                   </div>
 
@@ -109,8 +111,8 @@
                                       <label for="cep" class="col-sm-3 control-label">CEP</label>
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" value="{{cep}}" maxlength="8"
-                                          [(ngModel)]="alunoForm.cep" ng-required="true">
-                                      <span class="help-inline" ng-show="frmAlunos.cep.$invalid && frmAlunos.cep.$touched">CEP é obrigatório</span>
+                                          [(ngModel)]="alunoForm.cep" ng-required="true" (blur)="getEndereco(alunoForm.cep)">
+                                      <span style="color:red" class="help-inline" *ngIf="alunoValidation.cep">CEP é obrigatório</span>
                                       </div>
                                   </div>
 
@@ -119,7 +121,7 @@
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control" id="rua" name="rua" placeholder="Rua" value="{{rua}}" maxlength="120"
                                           [(ngModel)]="alunoForm.rua" ng-required="true">
-                                      <span class="help-inline" ng-show="frmAlunos.rua.$invalid && frmAlunos.rua.$touched">Rua é obrigatório</span>
+                                      <span style="color:red" class="help-inline" *ngIf="alunoValidation.rua">Rua é obrigatório</span>
                                       </div>
                                   </div>
 
@@ -128,8 +130,8 @@
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control" id="numero_endereco" name="numero_endereco" placeholder="Número" numbers-only="numbers-only" value="{{numero_endereco}}"
                                           [(ngModel)]="alunoForm.numero_endereco" ng-required="true">
-                                      <span class="help-inline"
-                                          ng-show="frmAlunos.numero_endereco.$invalid && frmAlunos.numero_endereco.$touched">Número é obrigatório</span>
+                                      <span style="color:red" class="help-inline"
+                                          *ngIf="alunoValidation.numero_endereco">Número é obrigatório</span>
                                       </div>
                                   </div>
 
@@ -145,7 +147,7 @@
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" value="{{bairro}}" maxlength="100"
                                           [(ngModel)]="alunoForm.bairro" ng-required="true">
-                                      <span class="help-inline" ng-show="frmAlunos.bairro.$invalid && frmAlunos.bairro.$touched">Bairro é obrigatório</span>
+                                      <span style="color:red" class="help-inline" *ngIf="alunoValidation.bairro">Bairro é obrigatório</span>
                                       </div>
                                   </div>
 
@@ -154,7 +156,7 @@
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" value="{{cidade}}" maxlength="100"
                                           [(ngModel)]="alunoForm.cidade" ng-required="true">
-                                      <span class="help-inline" ng-show="frmAlunos.cidade.$invalid && frmAlunos.cidade.$touched">Cidade é obrigatório</span>
+                                      <span style="color:red" class="help-inline" *ngIf="alunoValidation.cidade">Cidade é obrigatório</span>
                                       </div>
                                   </div>
 
@@ -199,9 +201,9 @@
                                       <label for="nome_mae" class="col-sm-3 control-label">Nome da mãe</label>
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control" id="nome_mae" name="nome_mae" placeholder="Nome da mãe" value="{{nome_mae}}" maxlength="100"
-                                          [(ngModel)]="alunoForm.nome_mae" ng-required="true">
-                                          <span class="help-inline"
-                                          ng-show="frmAlunos.nome_mae.$invalid && frmAlunos.nome_mae.$touched">Nome da mãe é obrigatório.</span>
+                                          [(ngModel)]="alunoForm.nome_mae" ng-required="true" >
+                                          <span style="color:red" class="help-inline"
+                                          *ngIf="alunoValidation.nome_mae">Nome da mãe é obrigatório.</span>
                                       </div>
                                   </div>
 
@@ -209,8 +211,9 @@
                                       <label for="cpf" class="col-sm-3 control-label">CPF</label>
                                       <div class="col-sm-9">
                                           <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" ng-cpf value="{{cpf}}" maxlength="11"
-                                          [(ngModel)]="alunoForm.cpf" ng-required="true">
-                                          <span class="help-inline" ng-show="frmAlunos.cpf.$invalid && frmAlunos.cpf.$touched">Preencha um CPF válido.</span>
+                                          [(ngModel)]="alunoForm.cpf" ng-required="true"
+                                          >
+                                          <span style="color:red" class="help-inline" *ngIf="alunoValidation.cpf">Preencha um CPF válido.</span>
                                       </div>
                                   </div>
 
@@ -247,6 +250,7 @@
                                                 <option value="27">27</option>
                                                 <option value="27">28</option>
                                             </select>
+                                            <span style="color:red" class="help-inline" *ngIf="alunoValidation.venc"> Dia de Vencimento é obrigatório</span>
                                       </div>
                                   </div>
 
