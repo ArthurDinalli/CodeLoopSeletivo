@@ -39,4 +39,6 @@ npm install
 
 npm start
 
+Com a API rodando, se tudo estiver correto, deverá abrir em http://localhost:4200
+
 
