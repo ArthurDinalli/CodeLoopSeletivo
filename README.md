@@ -1,27 +1,42 @@
 # CodeloopSeletivo
+A aplicação foi desenvolvida afim de atender as especificações de um processo seletivo, com foco em ser dinâmica e fácil de se utilizar. 
+O usuário pode inserir, deletar, editar e ver registros - com validação no front-end e no back-end dos campos e preenchimento automático a partir do CEP - de alunos com os seguintes campos:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+Nome (100 caracteres)
 
-## Development server
+Data de Nascimento (Data válida)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Série de Ingresso (1o ao 9o ano)
 
-## Code scaffolding
+CEP (CEP válido)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Rua (120 caracteres)
 
-## Build
+Número (Apenas números)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Complemento (50 caracteres)
 
-## Running unit tests
+Bairro (100 caracteres)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Cidade (100 caracteres)
 
-## Running end-to-end tests
+Estado (2 caracteres)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Nome da mãe (100 caracteres)
 
-## Further help
+CPF da mãe (CPF válido)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Data preferencial para pagamento da mensalidade (Data válida)
+
+
+## Instalação
+
+git clone https://github.com/ArthurDinalli/CodeLoopSeletivo.git
+
+cd CodeLoopSeletivo
+
+npm install
+
+npm start
+
+
