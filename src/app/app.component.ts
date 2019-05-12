@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     cpf: false,
     venc:false,
   }
-  private alunos: any[] = [];
+  private alunos = undefined;
   
   private isUpdating = false;
   ngOnInit(){
@@ -278,7 +278,7 @@ export class AppComponent implements OnInit {
     return true;
 
   }
-  
+
   private validacao() {
     if(this.alunoForm.nome == ''){
       this.alunoValidation.nome = true;
