@@ -30,6 +30,8 @@ export class AppComponent implements OnInit {
   	venc: ''
   };
 
+  public pesquisa = '';
+
   private alunoValidation = {
     nome: false,
     serie: false,
@@ -61,6 +63,22 @@ export class AppComponent implements OnInit {
           console.log("Error occured");
         }
       );
+  }
+  
+  private limpar () {
+    this.isUpdating = true;
+    this.http.get('http://localhost:8000/alunos')
+      .subscribe(
+        res => {
+          this.alunos = res;
+          this.isUpdating = false;
+          console.log(res);
+        },
+        err => {
+          console.log("Error occured");
+        }
+      );
+    this.pesquisa = '';
   }
 
   private adicionarAluno(content) {
@@ -224,6 +242,20 @@ export class AppComponent implements OnInit {
           );
     
   }
+
+  private filtrar(){
+    this.isUpdating = true;
+    this.http.post('http://localhost:8000/alunos/filtro', {nome: this.pesquisa}).subscribe(
+      res => {
+        this.alunos = res;
+        this.isUpdating = false;
+        console.log(res);
+
+      }
+
+     );
+  }
+
   private validateCPF(cpf) {
     var Soma;
     var Resto;
